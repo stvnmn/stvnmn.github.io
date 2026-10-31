@@ -25,10 +25,6 @@
       --tag-fg:   #2E4D8A;
     }
 
-    html, body {
-      height: 100%;
-    }
-
     body {
       background: var(--bg);
       color: var(--fg);
@@ -36,10 +32,8 @@
       font-weight: 300;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       padding: 2.5rem 3rem;
       min-height: 100vh;
-      overflow: hidden;
     }
 
     header, main, footer {
@@ -87,11 +81,15 @@
     main {
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 2rem;
+      justify-content: center;
+      width: min(100%, 980px);
+      flex: 1;
+      margin: 4rem auto;
     }
 
     .headline {
-      font-size: clamp(3.5rem, 11vw, 9rem);
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
       font-weight: 300;
       line-height: 0.94;
       letter-spacing: -0.03em;
@@ -114,6 +112,88 @@
       line-height: 1.9;
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.45s;
+    }
+
+    .project {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1.5rem 2rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.55s;
+    }
+
+    .project-label {
+      grid-column: 1 / -1;
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .project-copy {
+      max-width: 610px;
+    }
+
+    .project-title {
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.65rem;
+    }
+
+    .project-description {
+      max-width: 600px;
+      font-size: 0.72rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .project-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1.2rem;
+      list-style: none;
+    }
+
+    .project-features li {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--tag-fg);
+      background: var(--tag-bg);
+      padding: 0.35rem 0.55rem;
+      border-radius: 2px;
+    }
+
+    .project-link {
+      align-self: start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--accent);
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .project-link:hover {
+      background: var(--tag-bg);
+      border-color: var(--accent);
+    }
+
+    .project-link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
     }
 
     /* ── Footer ── */
@@ -373,6 +453,11 @@
       .overlay { padding: 1.8rem 1.5rem; }
       .overlay-panel { max-width: 100%; }
       .year { font-size: 3.5rem; }
+      main { gap: 1.6rem; margin: 3rem auto; }
+      .project { grid-template-columns: 1fr; gap: 1rem; }
+      .project-label { grid-column: auto; }
+      .project-link { justify-self: start; }
+      footer { gap: 1rem; }
     }
   </style>
 </head>
@@ -381,13 +466,40 @@
   <header>
     <div class="wordmark">stvnmn.com</div>
     <div class="status">
-      <span class="status-dot"></span>In progress
+      <span class="status-dot"></span>Open source · 01
     </div>
   </header>
 
   <main>
-    <h1 class="headline">Coming<br /><em>Soon.</em></h1>
-    <p class="subline">Portfolio &amp; work · Launching soon</p>
+    <h1 class="headline">Building<br /><em>useful things.</em></h1>
+    <p class="subline">A small collection of projects · Starting with</p>
+
+    <article class="project" aria-labelledby="budget-tracker-title">
+      <p class="project-label">Featured project / 01</p>
+      <div class="project-copy">
+        <h2 class="project-title" id="budget-tracker-title">Budget Tracker</h2>
+        <p class="project-description">
+          A self-hosted weekly budget tracker that makes it easy to see where your money is going.
+          Track transactions, review spending by category, and tune the budget, categories, currency,
+          and timezone to fit your needs. Your data stays in a local SQLite database.
+        </p>
+        <ul class="project-features" aria-label="Project technologies and features">
+          <li>Flask</li>
+          <li>SQLite</li>
+          <li>Docker</li>
+          <li>Responsive dashboard</li>
+        </ul>
+      </div>
+      <a
+        class="project-link"
+        href="https://github.com/stvnmn/budget-tracker"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="View Budget Tracker source on GitHub (opens in a new tab)"
+      >
+        View on GitHub <span aria-hidden="true">↗</span>
+      </a>
+    </article>
   </main>
 
   <footer>
@@ -397,11 +509,11 @@
         <span class="tag">Analytics</span>
         <span class="tag">Reporting</span>
       </div>
-      <p class="footer-note">Something is being built here.<br />Check back later.</p>
+      <p class="footer-note">Open-source projects<br />Made for everyday use.</p>
       <button class="contact-trigger" id="openContact">Get in touch</button>
     </div>
     <div class="footer-right">
-      <div class="year">2025</div>
+      <div class="year">2026</div>
     </div>
   </footer>
 
