@@ -44,7 +44,8 @@
     header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
+      gap: 1.5rem;
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.1s;
     }
@@ -56,25 +57,106 @@
       color: var(--fg);
     }
 
-    .status {
-      font-size: 0.62rem;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
+    .site-nav {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.35rem;
     }
 
-    .status-dot {
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2.5s ease-in-out infinite;
-      flex-shrink: 0;
+    .tab-button {
+      border: 1px solid transparent;
+      border-radius: 2px;
+      padding: 0.55rem 0.7rem;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: 400 0.58rem 'Geist Mono', monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .tab-button:hover,
+    .tab-button[aria-selected="true"] {
+      color: var(--accent);
+    }
+
+    .tab-button[aria-selected="true"] {
+      background: var(--tag-bg);
+      border-color: var(--border);
+    }
+
+    .tab-button:focus-visible,
+    .text-link:focus-visible,
+    .btn-submit:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .tab-panel[hidden] {
+      display: none;
+    }
+
+    .tab-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .home-panel {
+      gap: 1.6rem;
+    }
+
+    .home-summary,
+    .about-copy {
+      max-width: 640px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 2;
+    }
+
+    .text-link {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--accent);
+      background: transparent;
+      cursor: pointer;
+      font: 400 0.58rem 'Geist Mono', monospace;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .text-link:hover {
+      background: var(--tag-bg);
+      border-color: var(--accent);
+    }
+
+    .section-heading {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .section-heading em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .section-label {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
     }
 
     /* ── Main ── */
@@ -236,35 +318,6 @@
       border-radius: 2px;
     }
 
-    .contact-trigger {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.6rem;
-      font-family: 'Geist Mono', monospace;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    .contact-trigger::before {
-      content: '';
-      display: inline-block;
-      width: 14px;
-      height: 1px;
-      background: var(--accent);
-      transition: width 0.25s ease;
-    }
-
-    .contact-trigger:hover { opacity: 0.65; }
-    .contact-trigger:hover::before { width: 22px; }
-
     .footer-right {
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.7s;
@@ -279,58 +332,10 @@
       user-select: none;
     }
 
-    /* ── Overlay ── */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      padding: 2.5rem 3rem;
-      pointer-events: none;
-    }
-
-    .overlay.is-open { pointer-events: all; }
-
-    .overlay-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(245, 243, 238, 0.88);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .overlay.is-open .overlay-backdrop { opacity: 1; }
-
-    .overlay-panel {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 400px;
-      transform: translateY(20px);
-      opacity: 0;
-      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
-    }
-
-    .overlay.is-open .overlay-panel {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .panel-label {
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 1.4rem;
-    }
-
     .contact-form {
       display: flex;
       flex-direction: column;
+      width: min(100%, 560px);
     }
 
     .field {
@@ -374,24 +379,9 @@
     .form-footer {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       margin-top: 1.2rem;
     }
-
-    .btn-close {
-      font-size: 0.57rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: 'Geist Mono', monospace;
-      padding: 0;
-      transition: color 0.2s ease;
-    }
-
-    .btn-close:hover { color: var(--fg); }
 
     .btn-submit {
       font-size: 0.6rem;
@@ -436,28 +426,35 @@
       margin-top: 0.6rem;
     }
 
+    .form-error {
+      display: none;
+      margin-top: 0.8rem;
+      color: #A33D32;
+      font-size: 0.65rem;
+      line-height: 1.7;
+    }
+
+    .form-error.is-visible { display: block; }
+
     /* ── Animations ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.25; }
-    }
-
     /* ── Responsive ── */
     @media (max-width: 600px) {
       body { padding: 1.8rem 1.5rem; }
-      .overlay { padding: 1.8rem 1.5rem; }
-      .overlay-panel { max-width: 100%; }
+      header { align-items: flex-start; flex-direction: column; }
+      .site-nav { justify-content: flex-start; width: 100%; }
+      .tab-button { padding: 0.5rem 0.55rem; }
       .year { font-size: 3.5rem; }
       main { gap: 1.6rem; margin: 3rem auto; }
       .project { grid-template-columns: 1fr; gap: 1rem; }
       .project-label { grid-column: auto; }
       .project-link { justify-self: start; }
       footer { gap: 1rem; }
+      .footer-right { display: none; }
     }
   </style>
 </head>
@@ -465,64 +462,71 @@
 
   <header>
     <div class="wordmark">stvnmn.com</div>
-    <div class="status">
-      <span class="status-dot"></span>Open source · 01
-    </div>
+    <nav class="site-nav" role="tablist" aria-label="Main navigation">
+      <button class="tab-button" id="tab-home" type="button" role="tab" aria-selected="true" aria-controls="panel-home" tabindex="0">Home</button>
+      <button class="tab-button" id="tab-about" type="button" role="tab" aria-selected="false" aria-controls="panel-about" tabindex="-1">About Me</button>
+      <button class="tab-button" id="tab-projects" type="button" role="tab" aria-selected="false" aria-controls="panel-projects" tabindex="-1">Projects</button>
+      <button class="tab-button" id="tab-contact" type="button" role="tab" aria-selected="false" aria-controls="panel-contact" tabindex="-1">Contact</button>
+    </nav>
   </header>
 
   <main>
-    <h1 class="headline">Building<br /><em>useful things.</em></h1>
-    <p class="subline">A small collection of projects · Starting with</p>
+    <section class="tab-panel home-panel" id="panel-home" role="tabpanel" aria-labelledby="tab-home" tabindex="0">
+      <p class="subline">Personal portfolio · Open-source work</p>
+      <h1 class="headline">Building<br /><em>useful things.</em></h1>
+      <p class="home-summary">
+        I build practical tools around data, analytics, and everyday needs. Explore my work,
+        starting with a self-hosted weekly budget tracker.
+      </p>
+      <button class="text-link" type="button" data-tab-target="projects">
+        Explore projects <span aria-hidden="true">→</span>
+      </button>
+    </section>
 
-    <article class="project" aria-labelledby="budget-tracker-title">
-      <p class="project-label">Featured project / 01</p>
-      <div class="project-copy">
-        <h2 class="project-title" id="budget-tracker-title">Budget Tracker</h2>
-        <p class="project-description">
-          A self-hosted weekly budget tracker that makes it easy to see where your money is going.
-          Track transactions, review spending by category, and tune the budget, categories, currency,
-          and timezone to fit your needs. Your data stays in a local SQLite database.
-        </p>
-        <ul class="project-features" aria-label="Project technologies and features">
-          <li>Flask</li>
-          <li>SQLite</li>
-          <li>Docker</li>
-          <li>Responsive dashboard</li>
-        </ul>
-      </div>
-      <a
-        class="project-link"
-        href="https://github.com/stvnmn/budget-tracker"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="View Budget Tracker source on GitHub (opens in a new tab)"
-      >
-        View on GitHub <span aria-hidden="true">↗</span>
-      </a>
-    </article>
-  </main>
+    <section class="tab-panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about" tabindex="0" hidden>
+      <p class="section-label">A little about my work</p>
+      <h1 class="section-heading">About <em>me.</em></h1>
+      <p class="about-copy">
+        I’m interested in making data useful through thoughtful engineering, analytics, and
+        reporting. I also enjoy building practical software people can run and make their own.
+        This site is where I share those projects, beginning with an open-source budget tracker.
+      </p>
+    </section>
 
-  <footer>
-    <div class="footer-left">
-      <div class="tags">
-        <span class="tag">Data Engineering</span>
-        <span class="tag">Analytics</span>
-        <span class="tag">Reporting</span>
-      </div>
-      <p class="footer-note">Open-source projects<br />Made for everyday use.</p>
-      <button class="contact-trigger" id="openContact">Get in touch</button>
-    </div>
-    <div class="footer-right">
-      <div class="year">2026</div>
-    </div>
-  </footer>
+    <section class="tab-panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects" tabindex="0" hidden>
+      <p class="section-label">Open-source project / 01</p>
+      <h1 class="section-heading">Selected <em>work.</em></h1>
+      <article class="project" aria-labelledby="budget-tracker-title">
+        <p class="project-label">Featured project / 01</p>
+        <div class="project-copy">
+          <h2 class="project-title" id="budget-tracker-title">Budget Tracker</h2>
+          <p class="project-description">
+            A self-hosted weekly budget tracker that makes it easy to see where your money is going.
+            Track transactions, review spending by category, and tune the budget, categories, currency,
+            and timezone to fit your needs. Your data stays in a local SQLite database.
+          </p>
+          <ul class="project-features" aria-label="Project technologies and features">
+            <li>Flask</li>
+            <li>SQLite</li>
+            <li>Docker</li>
+            <li>Responsive dashboard</li>
+          </ul>
+        </div>
+        <a
+          class="project-link"
+          href="https://github.com/stvnmn/budget-tracker"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View Budget Tracker source on GitHub (opens in a new tab)"
+        >
+          View on GitHub <span aria-hidden="true">↗</span>
+        </a>
+      </article>
+    </section>
 
-  <!-- Contact overlay -->
-  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Contact form">
-    <div class="overlay-backdrop" id="backdrop"></div>
-    <div class="overlay-panel">
-      <p class="panel-label">Contact</p>
-
+    <section class="tab-panel" id="panel-contact" role="tabpanel" aria-labelledby="tab-contact" tabindex="0" hidden>
+      <p class="section-label">Have a question or idea?</p>
+      <h1 class="section-heading">Get in <em>touch.</em></h1>
       <form
         class="contact-form"
         id="contactForm"
@@ -543,54 +547,85 @@
         </div>
 
         <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
+        <p class="form-error" id="formError" role="alert">Your message could not be sent. Please try again.</p>
 
         <div class="form-footer">
-          <button type="button" class="btn-close" id="closeContact">Dismiss</button>
           <button type="submit" class="btn-submit" id="submitBtn">Send message</button>
         </div>
       </form>
 
-      <div class="form-success" id="formSuccess">
+      <div class="form-success" id="formSuccess" role="status" aria-live="polite">
         <p class="s-title">Message<br /><em>received.</em></p>
         <p class="s-sub">I'll be in touch soon.</p>
       </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-left">
+      <div class="tags">
+        <span class="tag">Data Engineering</span>
+        <span class="tag">Analytics</span>
+        <span class="tag">Reporting</span>
+      </div>
+      <p class="footer-note">Open-source projects<br />Made for everyday use.</p>
     </div>
-  </div>
+    <div class="footer-right">
+      <div class="year">2026</div>
+    </div>
+  </footer>
 
   <script>
-    const overlay    = document.getElementById('overlay');
-    const backdrop   = document.getElementById('backdrop');
-    const openBtn    = document.getElementById('openContact');
-    const closeBtn   = document.getElementById('closeContact');
-    const form       = document.getElementById('contactForm');
-    const submitBtn  = document.getElementById('submitBtn');
-    const successMsg = document.getElementById('formSuccess');
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
 
-    function openOverlay() {
-      overlay.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => form.querySelector('input').focus(), 300);
+    function activateTab(tab, moveFocus = false) {
+      tabs.forEach((item) => {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.id !== tab.getAttribute('aria-controls');
+      });
+
+      if (moveFocus) tab.focus();
     }
 
-    function closeOverlay() {
-      overlay.classList.remove('is-open');
-      document.body.style.overflow = '';
-    }
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activateTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        let nextIndex;
+        if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+        if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = tabs.length - 1;
+        if (nextIndex !== undefined) {
+          event.preventDefault();
+          activateTab(tabs[nextIndex], true);
+        }
+      });
+    });
 
-    openBtn.addEventListener('click', openOverlay);
-    closeBtn.addEventListener('click', closeOverlay);
-    backdrop.addEventListener('click', closeOverlay);
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeOverlay();
+    document.querySelectorAll('[data-tab-target]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = tabs.find((tab) => tab.id === `tab-${button.dataset.tabTarget}`);
+        if (target) activateTab(target);
+      });
     });
 
     const RECAPTCHA_SITE_KEY = '6LdVUscsAAAAAGOgMTTEM3N856fx6KQDnq20DtWk';
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMsg = document.getElementById('formSuccess');
+    const formError = document.getElementById('formError');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
+      formError.classList.remove('is-visible');
 
       try {
         const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit' });
@@ -605,14 +640,15 @@
         if (res.ok) {
           form.style.display = 'none';
           successMsg.classList.add('is-visible');
-          setTimeout(closeOverlay, 3200);
         } else {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Try again';
+          formError.classList.add('is-visible');
         }
       } catch {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Try again';
+        formError.classList.add('is-visible');
       }
     });
   </script>

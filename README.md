@@ -1,6 +1,6 @@
 # stvnmn.com
 
-Personal portfolio and project page, built as a lightweight static site.
+Personal portfolio and project page, built as a lightweight static site. Use the Home, About Me, Projects, and Contact tabs to explore the site.
 
 ## Featured project
 
